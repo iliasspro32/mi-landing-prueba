@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر رقمي | Raqmiy Digital Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --gold: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            --gold-solid: #fbbf24;
+            --dark-bg: #050505;
+            --card-bg: #111;
+            --text: #fff;
+            --muted: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            direction: rtl;
+        }
+
+        /* 1. Barra de Oferta */
+        .offer-bar {
+            background: var(--gold);
+            color: #000;
+            padding: 12px;
+            text-align: center;
+            font-weight: 900;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* 2. Hero Section */
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+            background: radial-gradient(circle at top, #1a1a1a 0%, #050505 100%);
+        }
+        .hero h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 900; margin-bottom: 20px; }
+        .hero h1 span { background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero .sub-h1 { color: var(--muted); font-size: 18px; margin-bottom: 40px; }
+
+        /* 3. Card de Oferta Principal */
+        .main-offer-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            position: relative;
+        }
+        .price-box { margin: 30px 0; }
+        .old-price { text-decoration: line-through; color: #666; font-size: 24px; }
+        .new-price { font-size: 70px; font-weight: 900; color: #fff; display: block; line-height: 1; }
+        .new-price span { font-size: 26px; color: var(--gold-solid); }
+
+        /* Botones de Pago[cite: 1] */
+        .btn-pay {
+            width: 100%;
+            padding: 20px;
+            border-radius: 18px;
+            font-size: 22px;
+            font-weight: 900;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
+            margin-bottom: 15px;
+        }
+        .stripe-btn { background: var(--gold); color: #000; }
+        .stripe-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(217,119,6,0.4); }
+
+        /* 4. Grid de Regalos (Bonos)[cite: 1] */
+        .section-title { text-align: center; margin: 80px 0 40px; font-size: 32px; font-weight: 900; }
+        .section-title span { color: var(--gold-solid); }
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .bonus-item {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: right;
+            transition: 0.3s;
+        }
+        .bonus-item:hover { border-color: var(--gold-solid); }
+        .tag-free { background: #10b981; color: #000; font-size: 11px; font-weight: 900; padding: 2px 8px; border-radius: 4px; float: left; }
+
+        /* 5. Biblioteca Móvil de Productos (35k+)[cite: 1] */
+        .products-scroll-container {
+            overflow: hidden;
+            padding: 40px 0;
+            background: #080808;
+            position: relative;
+        }
+        .products-track {
+            display: flex;
+            gap: 20px;
+            animation: scroll 40s linear infinite;
+            width: max-content;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(50%); }
+        }
+        .product-card-mini {
+            width: 280px;
+            background: #111;
+            border-radius: 20px;
+            padding: 15px;
+            border: 1px solid #222;
+        }
+        .product-card-mini img { width: 100%; border-radius: 12px; height: 160px; object-fit: cover; }
+
+        /* 6. Sección Comparativa[cite: 1] */
+        .vs-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        .vs-card { padding: 30px; border-radius: 24px; text-align: right; }
+        .bad { background: rgba(220,38,38,0.05); border: 1px solid rgba(220,38,38,0.2); }
+        .good { background: rgba(251,191,36,0.05); border: 2px solid var(--gold-solid); }
+
+        /* 7. Testimonios[cite: 1] */
+        .testimonials { padding: 80px 20px; text-align: center; }
+        .t-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1100px; margin: auto; }
+        .t-card { background: #0f0f0f; padding: 30px; border-radius: 24px; border: 1px solid #222; text-align: right; }
+        .t-card img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--gold-solid); margin-bottom: 15px; }
+
+        /* 8. FAQ Acordeón[cite: 1] */
+        .faq { max-width: 800px; margin: 80px auto; padding: 0 20px; }
+        .faq-item { background: #0a0a0a; border: 1px solid #222; margin-bottom: 10px; border-radius: 12px; }
+        .faq-q { width: 100%; padding: 20px; background: none; border: none; color: #fff; text-align: right; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; }
+        .faq-a { max-height: 0; overflow: hidden; padding: 0 20px; color: #888; transition: 0.3s; }
+        .faq-item.active .faq-a { max-height: 200px; padding-bottom: 20px; }
+
+        /* 9. Footer[cite: 1] */
+        footer { background: #000; padding: 60px 20px; text-align: center; border-top: 1px solid #111; }
+        .footer-logos { font-size: 30px; color: var(--gold-solid); display: flex; justify-content: center; gap: 20px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+
+    <div class="offer-bar">🔥 فرصة محدودة: احصل على باقة منتجات PLR اليوم بسعر خاص[cite: 1]</div>
+
+    <section class="hero">
+        <h1>امتلك مشروعك <span>الجاهز</span> وابدأ بجني الأرباح[cite: 1]</h1>
+        <p class="sub-h1">لقد صممنا كل شيء.. أنت فقط استلم الأرباح![cite: 1]</p>
+
+        <div class="main-offer-card">
+            <div class="price-box">
+                <span class="old-price">997$</span>
+                <span class="new-price">29 <span>دولار فقط</span>[cite: 1]</span>
+            </div>
+
+            <button class="btn-pay stripe-btn" onclick="alert('Iniciando Stripe Checkout...')">
+                <i class="fa-solid fa-credit-card"></i> شراء بواسطة البطاقة / Apple Pay[cite: 1]
+            </button>
+
+            <div id="paypal-button-container"></div>
+            
+            <p style="color: #34d399; font-weight: 700; margin-top: 20px;">✓ ضمان استرجاع الأموال بنسبة 100%[cite: 1]</p>
+        </div>
+    </section>
+
+    <!-- Regalos / Bonos[cite: 1] -->
+    <h2 class="section-title">أضفنا لك 8 هدايا مجانية بقيمة 1,800$[cite: 1]</h2>
+    <div class="bonus-grid">
+        <div class="bonus-item">
+            <span class="tag-free">مجانًا</span>
+            <div style="font-weight: 900; margin-top: 10px;">1. الطباعة عند الطلب[cite: 1]</div>
+            <p style="font-size: 13px; color: #666;">ابدأ مشروع التيشرتات الخاص بك[cite: 1]</p>
+        </div>
+        <div class="bonus-item">
+            <span class="tag-free">مجانًا</span>
+            <div style="font-weight: 900; margin-top: 10px;">2. أسرار المنتجات الرقمية[cite: 1]</div>
+            <p style="font-size: 13px; color: #666;">كيف تختار المنتج الرابح[cite: 1]</p>
+        </div>
+        <div class="bonus-item">
+            <span class="tag-free">مجانًا</span>
+            <div style="font-weight: 900; margin-top: 10px;">3. كورس Canva الاحترافي[cite: 1]</div>
+            <p style="font-size: 13px; color: #666;">صمم إعلاناتك كالمحترفين[cite: 1]</p>
+        </div>
+    </div>
+
+    <!-- Carrusel de Productos[cite: 1] -->
+    <h2 class="section-title">استكشف <span>35,000+</span> منتج جاهز للربح[cite: 1]</h2>
+    <div class="products-scroll-container">
+        <div class="products-track">
+            <!-- Repetir estas cards para efecto infinito[cite: 1] -->
+            <div class="product-card-mini"><img src="https://ivomarket.com/wp-content/uploads/2025/08/67ef50a139379a143a018679.webp"></div>
+            <div class="product-card-mini"><img src="https://ivomarket.com/wp-content/uploads/2025/08/67ef50a1f504ae463ba10468.webp"></div>
+            <div class="product-card-mini"><img src="https://ivomarket.com/wp-content/uploads/2025/08/67ef50a1391ca165b4d69f5e.webp"></div>
+            <div class="product-card-mini"><img src="https://ivomarket.com/wp-content/uploads/2025/08/67ef50a1019de0446766bae4.webp"></div>
+            <!-- Duplicados para el scroll[cite: 1] -->
+            <div class="product-card-mini"><img src="https://ivomarket.com/wp-content/uploads/2025/08/67ef50a139379a143a018679.webp"></div>
+            <div class="product-card-mini"><img src="https://ivomarket.com/wp-content/uploads/2025/08/67ef50a1f504ae463ba10468.webp"></div>
+        </div>
+    </div>
+
+    <!-- Comparativa[cite: 1] -->
+    <div class="vs-section">
+        <div class="vs-card bad">
+            <h3 style="color: #ef4444; margin-bottom: 15px;">النسخ المقلدة ❌[cite: 1]</h3>
+            <ul style="list-style: none; color: #ef4444; font-size: 14px;">
+                <li>• ملفات مبعثرة وغير مرتبة[cite: 1]</li>
+                <li>• روابط تحميل تالفة[cite: 1]</li>
+            </ul>
+        </div>
+        <div class="vs-card good">
+            <h3 style="color: #fbbf24; margin-bottom: 15px;">متجر رقمي الأصلي ✅[cite: 1]</h3>
+            <ul style="list-style: none; font-size: 14px;">
+                <li>• تنظيم احترافي 100%[cite: 1]</li>
+                <li>• تحديثات دورية مجانية[cite: 1]</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Testimonios[cite: 1] -->
+    <section class="testimonials">
+        <h2 class="section-title">ماذا يقول <span>عملاؤنا</span>؟[cite: 1]</h2>
+        <div class="t-grid">
+            <div class="t-card">
+                <img src="https://www.raqmiy.com/wp-content/uploads/2025/12/حقوق-إعادة-البيع-PLR.jpg">
+                <div style="font-weight: 800;">محمد العتيبي[cite: 1]</div>
+                <p style="font-size: 14px; color: #888;">"بعت أول دورة تدريبية بعد 24 ساعة فقط من الشراء"[cite: 1]</p>
+            </div>
+            <div class="t-card">
+                <img src="https://www.raqmiy.com/wp-content/uploads/2025/10/13.jpg">
+                <div style="font-weight: 800;">سارة المهيري[cite: 1]</div>
+                <p style="font-size: 14px; color: #888;">"هذه المكتبة أعطتني مئات القوالب الجاهزة"[cite: 1]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ[cite: 1] -->
+    <div class="faq">
+        <h2 class="section-title">الأسئلة <span>الشائعة</span>[cite: 1]</h2>
+        <div class="faq-item">
+            <button class="faq-q">هل هذا الدفع لمرة واحدة فقط؟ <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-a">نعم، تدفع مرة واحدة فقط وتمتلك كل شيء للأبد[cite: 1]</div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-q">متى سأحصل على المنتجات؟ <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-a">مباشرة! بعد الدفع ستصلك روابط التحميل فوراً[cite: 1]</div>
+        </div>
+    </div>
+
+    <footer>
+        <h3 style="font-size: 24px;">متجر <span style="color: #fbbf24;">رقمي</span>[cite: 1]</h3>
+        <p style="color: #666; font-size: 14px;">وجهتك الأولى لتمكين رواد الأعمال العرب[cite: 1]</p>
+        <div class="footer-logos">
+            <i class="fa-brands fa-cc-visa"></i>
+            <i class="fa-brands fa-cc-mastercard"></i>
+            <i class="fa-brands fa-cc-paypal"></i>
+            <i class="fa-brands fa-cc-apple-pay"></i>
+        </div>
+        <div style="color: #333; font-size: 12px;">جميع الحقوق محفوظة © 2026 متجر رقمي[cite: 1]</div>
+    </footer>
+
+    <!-- Scripts de Pago -->
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+    <script>
+        // Acordeón FAQ[cite: 1]
+        document.querySelectorAll('.faq-q').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.parentElement.classList.toggle('active');
+            });
+        });
+
+        // PayPal Button[cite: 1]
+        paypal.Buttons({
+            createOrder: (data, actions) => {
+                return actions.order.create({
+                    purchase_units: [{ amount: { value: '29.00' } }]
+                });
+            },
+            onApprove: (data, actions) => {
+                return actions.order.capture().then(details => {
+                    window.location.href = "/success";
+                });
+            }
+        }).render('#paypal-button-container');
+    </script>
+</body>
+</html>
